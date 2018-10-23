@@ -1,0 +1,5 @@
+*.pyc
+*.swp
+.idea
+*.lock
+node_modules
