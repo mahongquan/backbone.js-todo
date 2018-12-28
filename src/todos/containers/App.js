@@ -11,6 +11,7 @@ class App extends React.Component{
     this.props.actions.loadTodo();
   }
   render=()=>{
+    console.log(this.props);
     return(  <div className="todoapp">
     <Header addTodo={this.props.actions.addTodo} />
     <MainSection todos={this.props.todos} actions={this.props.actions} />

@@ -6,6 +6,7 @@ import Checkbox from '@material-ui/core/Checkbox';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import { SHOW_ALL, SHOW_COMPLETED, SHOW_ACTIVE } from '../constants/TodoFilters'
 import List from '@material-ui/core/List';
+import Tooltip from '@material-ui/core/Tooltip';
 const TODO_FILTERS = {
   [SHOW_ALL]: () => true,
   [SHOW_ACTIVE]: todo => !todo.completed,
@@ -32,11 +33,13 @@ export default class MainSection extends Component {
     const { todos, actions } = this.props
     if (todos.length > 0) {
       return (
-      <FormControlLabel control={<Checkbox className="toggle-all"
+      <Tooltip title="完成所有事项"  placement="bottom">
+        <FormControlLabel control={<Checkbox className="toggle-all"
               value="completeAll" color="primary"
                type="checkbox"
                checked={completedCount === todos.length}
                onChange={actions.completeAll} />} label="全部完成" />
+      </Tooltip>
       )
     }
   }

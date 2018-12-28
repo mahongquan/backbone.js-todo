@@ -1,18 +1,27 @@
-import { LOAD_TODO, ADD_TODO, DELETE_TODO, 
+import { LOAD_TODO,LOAD_TODO_RES, ADD_TODO, DELETE_TODO, 
   EDIT_TODO, COMPLETE_TODO, COMPLETE_ALL, CLEAR_COMPLETED } from '../constants/ActionTypes'
-
 const initialState = [
   {
     text: 'Use Redux',
-    completed: false,
+    
+    : false,
     id: 0
   }
 ]
 
 export default function todos(state = initialState, action) {
   let new_state;
+  console.log(action)
   switch (action.type) {
     case LOAD_TODO:
+
+      new_state = JSON.parse(localStorage.getItem('mytodos'));
+      if(!new_state){
+        new_state=[];
+      }
+      return new_state;
+    case LOAD_TODO_RES:
+
       new_state = JSON.parse(localStorage.getItem('mytodos'));
       if(!new_state){
         new_state=[];
