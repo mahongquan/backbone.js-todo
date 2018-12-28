@@ -1,4 +1,5 @@
 export const ADD_TODO = 'ADD_TODO'
+export const ADD_TODO_RES = 'ADD_TODO_RES'
 export const LOAD_TODO = 'LOAD_TODO'
 export const LOAD_TODO_RES = 'LOAD_TODO_RES'
 export const DELETE_TODO = 'DELETE_TODO'

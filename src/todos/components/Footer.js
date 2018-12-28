@@ -24,7 +24,7 @@ export default class Footer extends Component {
 
     return (
       <span className="todo-count">
-        <strong>{activeCount || '没有'}</strong> {itemWord} 
+        <strong>{activeCount || '0'}</strong> {itemWord} 
       </span>
     )
   }
