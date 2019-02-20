@@ -1,5 +1,3 @@
-import { bindActionCreators } from 'redux'
-import { connect } from 'react-redux'
 import Header from '../components/Header'
 import MainSection from '../components/MainSection'
 import * as TodoActions from '../actions'
@@ -24,7 +22,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 import InboxIcon from '@material-ui/icons/MoveToInbox';
 import MailIcon from '@material-ui/icons/Mail';
 import { SHOW_ALL, SHOW_COMPLETED, SHOW_ACTIVE } from '../constants/TodoFilters'
-
+import { observer } from 'mobx-react';
 const drawerWidth = 240;
 const FILTER_TITLES = {
   [SHOW_ALL]: '全部',
@@ -88,13 +86,13 @@ const styles = theme => ({
   },
 });
 
-class App extends React.Component {
+@observer class App extends React.Component {
   state = {
     open: false,
     filter: SHOW_ACTIVE,
   };
   componentDidMount=() => {
-    this.props.actions.loadTodo();
+    this.props.store.actions.loadTodo();
   }
   handleDrawerOpen = () => {
     this.setState({ open: true });
@@ -129,7 +127,7 @@ class App extends React.Component {
               <MenuIcon />
             </IconButton>
             <Typography variant="h6" color="inherit" noWrap>
-              待办事项
+              待办事项{this.props.store.todos.length}
             </Typography>
           </Toolbar>
         </AppBar>
@@ -162,30 +160,27 @@ class App extends React.Component {
           })}
         >
           <div className={classes.drawerHeader} />
-          <Header addTodo={this.props.actions.addTodo} />
-          <MainSection todos={this.props.todos} filter={this.state.filter} actions={this.props.actions} />
+          <Header addTodo={this.props.store.actions.addTodo} />
+          <MainSection todos={this.props.store.todos} filter={this.state.filter} actions={this.props.store.actions} />
         </main>
       </div>
     );
   }
 }
 
-App.propTypes = {
-  classes: PropTypes.object.isRequired,
-  theme: PropTypes.object.isRequired,  
-  todos: PropTypes.array.isRequired,
-  actions: PropTypes.object.isRequired
-}
+// App.propTypes = {
+//   classes: PropTypes.object.isRequired,
+//   theme: PropTypes.object.isRequired,  
+//   todos: PropTypes.array.isRequired,
+//   actions: PropTypes.object.isRequired
+// }
 
-const mapStateToProps = state => ({
-  todos: state.todos
-})
+// const mapStateToProps = state => ({
+//   todos: state.todos
+// })
 
-const mapDispatchToProps = dispatch => ({
-    actions: bindActionCreators(TodoActions, dispatch)
-})
+// const mapDispatchToProps = dispatch => ({
+//     actions: bindActionCreators(TodoActions, dispatch)
+// })
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(withStyles(styles, { withTheme: true })( App))
+export default withStyles(styles, { withTheme: true })( App)
