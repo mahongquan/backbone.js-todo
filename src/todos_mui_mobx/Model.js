@@ -1,4 +1,4 @@
-import { decorate, observable,action,autorun} from "mobx"
+import { makeAutoObservable } from "mobx"
 var sqlite3 = require('sqlite3').verbose();
 let db = new sqlite3.Database(__dirname+'/data.db');
 const map_func=(one,idx)=>{
@@ -6,11 +6,12 @@ const map_func=(one,idx)=>{
                 return one
 }
 export default class Todo {
-  @observable todos=[{id:0,text:"0000",completed: false}];
+  todos=[{id:0,text:"0000",completed: false}];
   constructor() {
-     autorun(() => {
-        console.log(this.todos);
-  	 });
+    //  autorun(() => {
+    //     console.log(this.todos);
+  	 // });
+    makeAutoObservable(this)
   }
   actions={
     addTodo:(text)=>{
@@ -35,7 +36,7 @@ export default class Todo {
       this.deleteTodo(id);
     },
   };
-  @action clearCompleted =()=>{
+  clearCompleted =()=>{
       db.serialize(()=>{
         var cmd="delete from  todo where completed=1 ";
         db.run(cmd);
@@ -44,7 +45,7 @@ export default class Todo {
         });
       });   
   }
-  @action completeAll=()=>{
+  completeAll=()=>{
       db.serialize(()=>{
         var cmd="update todo set completed=1 ";
         db.run(cmd);
@@ -53,7 +54,7 @@ export default class Todo {
         });
       });    
   }
-  @action addTodo=(text)=>{
+  addTodo=(text)=>{
      db.serialize(()=>{
         var cmd="insert into  todo(text,completed) values('"+text+"',0)";
         db.run(cmd);
@@ -62,7 +63,7 @@ export default class Todo {
         });
       });
   }//id, text
-  @action completeTodo=(id)=>{
+  completeTodo=(id)=>{
       db.serialize(()=>{
         var cmd="update todo set completed=1 where id="+id;
         db.run(cmd);
@@ -70,7 +71,7 @@ export default class Todo {
               this.todos=row.map(map_func);
         });
       });  }//id, text
-  @action deleteTodo=(id)=>{
+  deleteTodo=(id)=>{
       db.serialize(()=>{
         var cmd="delete from   todo where id="+id;
         db.run(cmd);
@@ -79,7 +80,7 @@ export default class Todo {
         });
       });
   }//id, text
-  @action editTodo=(id,text)=>{
+  editTodo=(id,text)=>{
       db.serialize(()=>{
         var cmd="update todo set text='"+text+"' where id="+id;
         db.run(cmd);
@@ -88,7 +89,7 @@ export default class Todo {
         });
       });
   }//id, text
-  @action loadTodo=()=>{
+  loadTodo=()=>{
       db.serialize(()=>{
             db.all("SELECT * FROM todo", (err, row) =>{
                 this.todos=row.map(map_func);

@@ -16,9 +16,6 @@ import DeleteIcon from '@material-ui/icons/Delete';
 export default class TodoItem extends Component {
   static propTypes = {
     todo: PropTypes.object.isRequired,
-    editTodo: PropTypes.func.isRequired,
-    deleteTodo: PropTypes.func.isRequired,
-    completeTodo: PropTypes.func.isRequired
   }
 
   state = {
@@ -39,8 +36,10 @@ export default class TodoItem extends Component {
   }
 
   render() {
-    const { todo, completeTodo, deleteTodo } = this.props
-    console.log(todo.completed);
+    console.log("TodoItem=========");
+    console.log(this.props)
+    const { todo}=this.props;
+    const {completeTodo, deleteTodo } = this.props.actions;
     let element
     if (this.state.editing) {
       element = (

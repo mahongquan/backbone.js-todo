@@ -15,7 +15,7 @@ const TODO_FILTERS = {
 
 export default class MainSection extends Component {
   static propTypes = {
-    todos: PropTypes.array.isRequired,
+    // todos: PropTypes.array.isRequired,
     actions: PropTypes.object.isRequired
   }
 
@@ -64,7 +64,8 @@ export default class MainSection extends Component {
   render() {
     const { todos, actions } = this.props
     const { filter } = this.props;
-    console.log("=================================");
+    console.log("MainSection=================================");
+    console.log(this.props)
     console.log(todos);
     const filteredTodos = todos.filter(TODO_FILTERS[filter]);
     console.log(filteredTodos)
@@ -79,7 +80,7 @@ export default class MainSection extends Component {
         {this.renderToggleAll(completedCount)}
         <List className="todo-list">
           {filteredTodos.map(todo =>
-            <TodoItem key={todo.id} todo={todo} {...actions} />
+            <TodoItem key={todo.id} todo={todo} actions={actions}/>
           )}
         </List>
         {this.renderFooter(completedCount)}

@@ -10,13 +10,13 @@ import MailIcon from '@material-ui/icons/Mail';
 import Typography from '@material-ui/core/Typography';
 const styles = theme => ({
   button: {
-    margin: theme.spacing.unit*1.5,
+    margin: theme.spacing(1.5),
   },
   input: {
     display: 'none',
   },
   padding: {
-    padding: `0 ${theme.spacing.unit * 2}px`,
+    padding: `0 ${theme.spacing(2)}px`,
   },
 });
 const FILTER_TITLES = {

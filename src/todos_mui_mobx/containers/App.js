@@ -70,7 +70,7 @@ const styles = theme => ({
   },
   content: {
     flexGrow: 1,
-    padding: theme.spacing.unit * 3,
+    padding: theme.spacing(3),
     transition: theme.transitions.create('margin', {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen,
@@ -91,9 +91,13 @@ const styles = theme => ({
     open: false,
     filter: SHOW_ACTIVE,
   };
-  componentDidMount=() => {
-    this.props.store.actions.loadTodo();
+  constructor(props){
+    super();
+    props.store.actions.loadTodo();
   }
+  // componentDidMount=() => {
+    
+  // }
   handleDrawerOpen = () => {
     this.setState({ open: true });
   };
@@ -105,10 +109,11 @@ const styles = theme => ({
     this.setState({ filter })
   }
   render() {
+    console.log("app render================")
     console.log(this);
     const { classes, theme } = this.props;
     const { open } = this.state;
-
+    console.log(this.props)
     return (
       <div className={classes.root}>
         <CssBaseline />
@@ -127,7 +132,7 @@ const styles = theme => ({
               <MenuIcon />
             </IconButton>
             <Typography variant="h6" color="inherit" noWrap>
-              待办事项{this.props.store.todos.length}
+              待办事项
             </Typography>
           </Toolbar>
         </AppBar>
@@ -161,26 +166,11 @@ const styles = theme => ({
         >
           <div className={classes.drawerHeader} />
           <Header addTodo={this.props.store.actions.addTodo} />
-          <MainSection todos={this.props.store.todos} filter={this.state.filter} actions={this.props.store.actions} />
+          <MainSection todos={this.props.store.todos} 
+          filter={this.state.filter} actions={this.props.store.actions} />
         </main>
       </div>
     );
   }
 }
-
-// App.propTypes = {
-//   classes: PropTypes.object.isRequired,
-//   theme: PropTypes.object.isRequired,  
-//   todos: PropTypes.array.isRequired,
-//   actions: PropTypes.object.isRequired
-// }
-
-// const mapStateToProps = state => ({
-//   todos: state.todos
-// })
-
-// const mapDispatchToProps = dispatch => ({
-//     actions: bindActionCreators(TodoActions, dispatch)
-// })
-
 export default withStyles(styles, { withTheme: true })( App)
